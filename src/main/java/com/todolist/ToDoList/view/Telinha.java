@@ -9,12 +9,16 @@ public class Telinha {
 	
 	static ListaDeTarefas listaDeTarefas = new ListaDeTarefas();
 	static Scanner sc = new Scanner(System.in);
+	
+	public static final String ANSI_RESET = "\\u001B[0m";
+	public static final String ANSI_RED = "\u001B[31m";
+	
 
 	public static void main(String[] args) {
 		
 		
 		boolean estado = true;
-		int escolha;
+		Object escolha;
 		
 		while (estado) {
 			System.out.println(
@@ -24,27 +28,36 @@ public class Telinha {
 					+ "3 - Ver Lista de tarefas\n"
 					+ "0 - Sair\n");
 			
-			escolha = sc.nextInt();
+			System.out.print("Resposta: ");
+			escolha = sc.next();
+			System.out.println();
 			
-			switch (escolha) {
-			case 0:
-				estado = false;
-				break;
-				
-			case 1:
-				adicionarTarefa();
-				break;
+			try {
+				switch ((Integer) escolha) {
+				case 0:
+					estado = false;
+					break;
+					
+				case 1:
+					adicionarTarefa();
+					break;
 
-			case 2:
-				break;
-				
-			case 3:
-				verTarefas();
-				break;
-				
-			default:
-				break;
+				case 2:
+					break;
+					
+				case 3:
+					verTarefas();
+					break;
+					
+				default:
+					System.out.println("erro");
+					break;
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}
+			
+			
 		}
 		
 		sc.close();
@@ -52,7 +65,7 @@ public class Telinha {
 	
 	public static void adicionarTarefa() {
 		sc = new Scanner(System.in);
-		System.out.print("\nNome da tarefa: ");
+		System.out.print("Nome da tarefa: ");
 		String nomeTarefa = sc.nextLine();
 		int pos = listaDeTarefas.tamanho();
 
@@ -62,7 +75,7 @@ public class Telinha {
 	
 	public static void verTarefas() {
 		for(Tarefa tarefa: listaDeTarefas.getListaDeTarefas()) {
-			System.out.printf("%d - %s", tarefa.getPos()+1, tarefa.getNome());
+			System.out.printf(ANSI_RED + "%d - %s\n" + ANSI_RESET, tarefa.getPos()+1, tarefa.getNome());
 		}
 		
 		System.out.println("\n");
