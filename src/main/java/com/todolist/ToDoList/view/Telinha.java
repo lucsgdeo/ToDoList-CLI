@@ -1,5 +1,6 @@
 package com.todolist.ToDoList.view;
 
+import java.util.Iterator;
 import java.util.Scanner;
 
 import com.todolist.ToDoList.model.ListaDeTarefas;
@@ -43,6 +44,7 @@ public class Telinha {
 					break;
 
 				case 2:
+					removerTarefa();
 					break;
 					
 				case 3:
@@ -81,5 +83,24 @@ public class Telinha {
 		
 		System.out.println(ANSI_RESET + "\n");
 
+	}
+	
+	public static void removerTarefa() {
+		sc = new Scanner(System.in);
+		verTarefas();
+		
+		System.out.println("Escolha o numero da tarefa que quer remover: ");
+		
+		try {
+			int pos = sc.nextInt() - 1;
+			
+			listaDeTarefas.getListaDeTarefas().remove(pos);
+			
+			for(Tarefa tarefa: listaDeTarefas.getListaDeTarefas()) {
+				if(tarefa.getPos() > 0) tarefa.setPos(tarefa.getPos()-1);;
+			}
+		} catch (Exception e) {
+			System.err.println("Escolha um valor numérico");
+		}
 	}
 }
