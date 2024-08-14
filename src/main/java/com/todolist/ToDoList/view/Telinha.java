@@ -10,7 +10,7 @@ public class Telinha {
 	static ListaDeTarefas listaDeTarefas = new ListaDeTarefas();
 	static Scanner sc = new Scanner(System.in);
 	
-	public static final String ANSI_RESET = "\\u001B[0m";
+	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_RED = "\u001B[31m";
 	
 
@@ -18,7 +18,6 @@ public class Telinha {
 		
 		
 		boolean estado = true;
-		Object escolha;
 		
 		while (estado) {
 			System.out.println(
@@ -29,11 +28,12 @@ public class Telinha {
 					+ "0 - Sair\n");
 			
 			System.out.print("Resposta: ");
-			escolha = sc.next();
+			String escolha = sc.next();
 			System.out.println();
 			
 			try {
-				switch ((Integer) escolha) {
+				int opcao = Integer.valueOf(escolha);
+				switch (opcao) {
 				case 0:
 					estado = false;
 					break;
@@ -54,7 +54,7 @@ public class Telinha {
 					break;
 				}
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				System.out.println("Digite um valor numérico");
 			}
 			
 			
@@ -74,11 +74,12 @@ public class Telinha {
 	}
 	
 	public static void verTarefas() {
+		System.out.print(ANSI_RED);
 		for(Tarefa tarefa: listaDeTarefas.getListaDeTarefas()) {
-			System.out.printf(ANSI_RED + "%d - %s\n" + ANSI_RESET, tarefa.getPos()+1, tarefa.getNome());
+			System.out.printf("%d - %s\n", tarefa.getPos()+1, tarefa.getNome());
 		}
 		
-		System.out.println("\n");
+		System.out.println(ANSI_RESET + "\n");
 
 	}
 }
