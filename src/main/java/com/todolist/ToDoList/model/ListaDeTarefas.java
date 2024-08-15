@@ -35,4 +35,8 @@ public class ListaDeTarefas {
 		});;
 	}
 	
+	public void removerTodos() {
+		listaDeTarefas.clear();
+	}
+	
 }

@@ -26,6 +26,7 @@ public class Telinha {
 					+ "2 - Remover tarefa\n"
 					+ "3 - Ver Lista de tarefas\n"
 					+ "4 - Adicionar atômico\n"
+					+ "5 - Remover todos\n"
 					+ "0 - Sair");
 			
 			System.out.print("Resposta: ");
@@ -54,6 +55,10 @@ public class Telinha {
 					adicionarAtomico();
 					break;
 					
+				case 5:
+					removerTodos();
+					break;
+					
 				default:
 					System.err.println("erro");
 					break;
@@ -68,8 +73,56 @@ public class Telinha {
 		sc.close();
 	}
 	
+	public static void adicionarTarefa() {
+		sc = new Scanner(System.in);
+		System.out.print("\nNome da tarefa: ");
+		String nome = sc.nextLine();
+		int pos = listaDeTarefas.tamanho() + 1;
+	
+		listaDeTarefas.adicionar(new Tarefa(nome, pos));
+		System.out.println();
+	}
+
+	public static void adicionarTarefa(String nome) {
+		int pos = listaDeTarefas.tamanho() + 1;
+	
+		listaDeTarefas.adicionar(new Tarefa(nome, pos));
+		System.out.println();
+	}
+
+	public static void removerTarefa() {
+		sc = new Scanner(System.in);
+		verTarefas();
+		
+		System.out.println("Escolha o numero da tarefa que quer remover: ");
+		
+		try {
+			int pos = sc.nextInt() - 1;
+			
+			listaDeTarefas.getListaDeTarefas().remove(pos);
+			listaDeTarefas.organizarPos();
+			
+		} catch (Exception e) {
+			System.err.println("Escolha um valor numérico");
+		}
+	}
+
+	public static void verTarefas() {
+		if (listaDeTarefas.tamanho() == 0) {
+			System.err.println("Lista vazia");
+			return;
+		}
+		
+		System.out.print(ANSI_RED);
+		for(Tarefa tarefa: listaDeTarefas.getListaDeTarefas()) {
+			System.out.printf("\n%d - %s", tarefa.getPos(), tarefa.getNome());
+		}
+		
+		System.out.println(ANSI_RESET + "\n");
+	}
+
 	public static void adicionarAtomico() {
-		System.out.println("Digite o nome da tarefa ou digite sair");
+		System.out.println("\nDigite o nome da tarefa ou digite sair");
 		sc = new Scanner(System.in);
 		
 		while (true) {
@@ -86,48 +139,9 @@ public class Telinha {
 			System.out.println("Adicionado");
 		}
 	}
-	
-	public static void adicionarTarefa() {
-		sc = new Scanner(System.in);
-		System.out.print("\nNome da tarefa: ");
-		String nome = sc.nextLine();
-		int pos = listaDeTarefas.tamanho();
 
-		listaDeTarefas.adicionar(new Tarefa(nome, pos));
+	public static void removerTodos() {
+		listaDeTarefas.removerTodos();
 		System.out.println();
-	}
-	
-	public static void adicionarTarefa(String nome) {
-		int pos = listaDeTarefas.tamanho();
-
-		listaDeTarefas.adicionar(new Tarefa(nome, pos));
-		System.out.println();
-	}
-	
-	public static void verTarefas() {
-		System.out.print(ANSI_RED);
-		for(Tarefa tarefa: listaDeTarefas.getListaDeTarefas()) {
-			System.out.printf("%d - %s\n", tarefa.getPos()+1, tarefa.getNome());
-		}
-		
-		System.out.println(ANSI_RESET + "\n");
-
-	}
-	
-	public static void removerTarefa() {
-		sc = new Scanner(System.in);
-		verTarefas();
-		
-		System.out.println("Escolha o numero da tarefa que quer remover: ");
-		
-		try {
-			int pos = sc.nextInt() - 1;
-			
-			listaDeTarefas.getListaDeTarefas().remove(pos);
-			listaDeTarefas.organizarPos();
-			
-		} catch (Exception e) {
-			System.err.println("Escolha um valor numérico");
-		}
 	}
 }
