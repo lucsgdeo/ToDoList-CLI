@@ -75,12 +75,19 @@ public class Telinha {
 	
 	public static void adicionarTarefa() {
 		sc = new Scanner(System.in);
-		System.out.print("\nNome da tarefa: ");
-		String nome = sc.nextLine();
-		int pos = listaDeTarefas.tamanho() + 1;
-	
-		listaDeTarefas.adicionar(new Tarefa(nome, pos));
-		System.out.println();
+		while (true) {
+			System.out.print("\nNome da tarefa: ");
+			String nome = sc.nextLine();
+			
+			if (nome.equals("")) {
+				System.out.println(ANSI_RED + "Digite um nome" + ANSI_RESET);
+			} else {
+				int pos = listaDeTarefas.tamanho() + 1;
+				listaDeTarefas.adicionar(new Tarefa(nome, pos));
+				System.out.println();
+				break;
+			}
+		}
 	}
 
 	public static void adicionarTarefa(String nome) {
@@ -109,7 +116,7 @@ public class Telinha {
 
 	public static void verTarefas() {
 		if (listaDeTarefas.tamanho() == 0) {
-			System.err.println("Lista vazia");
+			System.err.println("\nLista vazia\n");
 			return;
 		}
 		
@@ -129,14 +136,17 @@ public class Telinha {
 			System.out.print("Valor: ");
 			String op = sc.nextLine();
 			
-			
 			if (op.equalsIgnoreCase("sair")) {
 				System.out.println();
 				break;
 			}
 			
-			adicionarTarefa(op);
-			System.out.println("Adicionado");
+			if (op.equals("")) {
+				System.out.println(ANSI_RED + "Digite um nome" + ANSI_RESET);
+			} else {
+				adicionarTarefa(op);
+				System.out.println("Adicionado");				
+			}
 		}
 	}
 
