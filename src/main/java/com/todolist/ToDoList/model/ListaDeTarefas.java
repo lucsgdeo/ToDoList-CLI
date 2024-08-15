@@ -6,13 +6,11 @@ import java.util.List;
 public class ListaDeTarefas {
 
 	private List<Tarefa> listaDeTarefas = new ArrayList<Tarefa>();
-
-	public ListaDeTarefas(List<Tarefa> listaDeTarefas) {
-		this.listaDeTarefas = listaDeTarefas;
-	}
 	
-	public ListaDeTarefas(Tarefa tarefa) {
-		this.listaDeTarefas.add(tarefa);
+	public ListaDeTarefas(Tarefa[] tarefas) {
+		for (Tarefa tarefa: tarefas) {
+			listaDeTarefas.add(tarefa);
+		}
 	}
 	
 	public ListaDeTarefas() {
@@ -29,6 +27,12 @@ public class ListaDeTarefas {
 
 	public List<Tarefa> getListaDeTarefas() {
 		return listaDeTarefas;
+	}
+	
+	public void organizarPos() {
+		listaDeTarefas.forEach(e -> {
+			e.setPos(listaDeTarefas.indexOf(e) + 1);
+		});;
 	}
 	
 }
